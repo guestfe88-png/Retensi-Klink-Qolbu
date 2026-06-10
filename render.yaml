@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: retensi-klinik-qolbu
+    runtime: docker
+    plan: free
+    branch: main
+    healthCheckPath: /up
+    envVars:
+      - key: APP_NAME
+        value: Retensi RM
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: false
+      - key: APP_KEY
+        sync: false
+      - key: APP_URL
+        sync: false
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_URL
+        fromDatabase:
+          name: retensi-db
+          property: connectionString
+      - key: SESSION_DRIVER
+        value: database
+      - key: SESSION_ENCRYPT
+        value: true
+      - key: CACHE_STORE
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: FILESYSTEM_DISK
+        value: local
+
+databases:
+  - name: retensi-db
+    plan: free
