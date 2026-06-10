@@ -1,0 +1,121 @@
+========================================================================
+PANDUAN MENJALANKAN APLIKASI RETENSI REKAM MEDIS DI WINDOWS & JARINGAN LOKAL
+========================================================================
+
+Aplikasi ini menggunakan Laravel & Livewire dengan database MySQL.
+Untuk menjalankannya di Windows, Anda akan menggunakan Laravel Herd (untuk PHP, Composer, dan Node.js) serta DBngin (untuk database MySQL).
+
+Berikut adalah langkah-langkah lengkap untuk menyiapkan dan menjalankan aplikasi di laptop/komputer Windows.
+
+------------------------------------------------------------------------
+LANGKAH 1: INSTALASI SOFTWARE PENDUKUNG DI WINDOWS
+------------------------------------------------------------------------
+1. UMB Kebutuhan PHP, Composer, & Node.js (Laravel Herd):
+   - Unduh dan instal Laravel Herd untuk Windows dari: https://herd.laravel.com
+   - Herd akan secara otomatis menginstal PHP (versi 8.3 ke atas recommended), Composer, dan Node.js/NPM.
+   - Pastikan Herd sudah berjalan dan aktif di sistem tray Windows Anda.
+
+2. UMB Database (DBngin & TablePlus):
+   - Unduh dan instal DBngin dari: https://dbngin.com
+   - Unduh dan instal TablePlus (opsional, untuk mempermudah kelola database) dari: https://tableplus.com
+   - Buka DBngin, lalu klik ikon "+" di kiri bawah untuk membuat service baru:
+     * Service: MySQL
+     * Version: 8.0 (atau versi MySQL terbaru yang tersedia)
+     * Name: mysql-local
+     * Port: 3306
+   - Klik "Create", lalu klik tombol "Start" di samping service MySQL yang baru dibuat untuk menyalakan database server.
+
+------------------------------------------------------------------------
+LANGKAH 2: MEMBUAT DATABASE DI DBNGIN/TABLEPLUS
+------------------------------------------------------------------------
+Sebelum menjalankan migrasi Laravel, Anda harus membuat database kosong terlebih dahulu:
+1. Di DBngin, klik ikon "Arrow/TablePlus" di sebelah kanan service MySQL Anda untuk membukanya di TablePlus (atau gunakan software database client lain seperti HeidiSQL/DBeaver).
+2. Hubungkan dengan konfigurasi default:
+   * Host: 127.0.0.1
+   * Port: 3306
+   * User: root
+   * Password: (kosongkan)
+3. Buat database baru bernama:
+   retensirm
+
+------------------------------------------------------------------------
+LANGKAH 3: MENYIAPKAN PROYEK DARI GITHUB
+------------------------------------------------------------------------
+Setelah Anda melakukan `git pull` atau mengkloning proyek ini di komputer Windows:
+
+1. Buka PowerShell, Command Prompt (CMD), atau Terminal Git Bash, lalu arahkan ke dalam folder proyek ini:
+   cd APPS-RETENSI-REKAM-MEDIS-master
+
+2. Salin file konfigurasi lingkungan (.env):
+   copy .env.example .env
+   (Catatan: Konfigurasi database di dalam .env.example sudah disesuaikan dengan MySQL DBngin secara default).
+
+3. Jalankan perintah instalasi dependensi PHP:
+   composer install
+
+4. Generate Application Key Laravel baru untuk keamanan:
+   php artisan key:generate
+
+5. Jalankan instalasi asset & front-end, lalu build asset Vite:
+   npm install
+   npm run build
+
+6. Jalankan migrasi database beserta data awal (seeding) untuk admin default:
+   php artisan migrate:fresh --seed
+
+   * Akun login bawaan setelah seeding:
+     Username: admin
+     Password: admin123
+
+7. Hubungkan folder penyimpanan (storage link) agar file PDF rekam medis dapat diakses:
+   php artisan storage:link
+
+------------------------------------------------------------------------
+LANGKAH 4: MENGETAHUI ALAMAT IP LOKAL WINDOWS SERVER
+------------------------------------------------------------------------
+Jika Anda ingin aplikasi ini diakses oleh laptop/HP lain (Client) dalam satu jaringan Wi-Fi/LAN:
+1. Buka Command Prompt (cmd) di Windows Server/Host Anda.
+2. Ketik perintah:
+   ipconfig
+3. Cari bagian "Wireless LAN adapter Wi-Fi" atau "Ethernet adapter".
+4. Catat alamat "IPv4 Address" yang tertera (contoh: 192.168.1.15).
+
+------------------------------------------------------------------------
+LANGKAH 5: MENJALANKAN & MENGAKSES APLIKASI DI JARINGAN LOKAL
+------------------------------------------------------------------------
+1. Di Terminal proyek Anda, jalankan server Laravel dengan mengikatnya ke IP 0.0.0.0 agar bisa diakses dari luar:
+   php artisan serve --host=0.0.0.0 --port=8000
+
+2. Jika muncul jendela peringatan "Windows Defender Firewall" (Security Alert), centang semua pilihan (Private & Public networks) lalu klik "Allow Access".
+
+3. Cara Mengakses:
+   - Dari Laptop Server/Host sendiri:
+     Buka browser dan ketik: http://localhost:8000 atau http://127.0.0.1:8000
+   - Dari Laptop/HP Client (harus satu jaringan Wi-Fi/LAN dengan Server):
+     Buka browser di Client dan ketik: http://[IP-ADDRESS-SERVER]:8000
+     (Contoh: http://192.168.1.15:8000)
+
+------------------------------------------------------------------------
+PANDUAN PEMECAHAN MASALAH (TROUBLESHOOTING)
+------------------------------------------------------------------------
+Apabila Anda menemui error saat menjalankan "composer install" seperti:
+- "bootstrap/cache must be present and writable"
+- "The post-autoload-dump event returned with error code 1"
+
+Solusi yang sudah disiapkan dan dapat dicoba:
+1. Otomatisasi Folder: Proyek ini sudah dikonfigurasi di `composer.json` agar secara otomatis membuat folder `bootstrap/cache` dan subfolder `storage/framework` yang dibutuhkan ketika `composer install` dijalankan.
+2. Pembuatan Manual (Jika Error Tetap Muncul):
+   Apabila Windows membatasi pembuatan folder otomatis karena hak akses, buatlah folder-folder berikut secara manual di dalam direktori proyek Anda:
+   - bootstrap/cache
+   - storage/framework/cache
+   - storage/framework/cache/data
+   - storage/framework/sessions
+   - storage/framework/views
+3. Menjalankan Install Tanpa Script:
+   Jika proses autoload-dump masih terhambat, jalankan instalasi dengan perintah bypass:
+   composer install --no-scripts
+   Setelah selesai, pastikan folder-folder di atas sudah dibuat secara manual, lalu jalankan:
+   php artisan package:discover
+
+Selamat mencoba! Aplikasi Retensi Rekam Medis siap digunakan di lingkungan Windows Anda.
+========================================================================
