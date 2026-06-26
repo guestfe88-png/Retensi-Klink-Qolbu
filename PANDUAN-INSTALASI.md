@@ -1,6 +1,6 @@
 # Panduan Instalasi Retensi RM — Klinik Kolbu
 
-Panduan ini untuk **pemula** yang belum pernah install aplikasi web.  
+Panduan ini untuk belum pernah install aplikasi web.  
 Ikuti langkah demi langkah dari atas ke bawah.
 
 ---
