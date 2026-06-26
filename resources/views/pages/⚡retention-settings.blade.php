@@ -45,7 +45,7 @@ new class extends Component
 ?>
 
 <div class="p-6 flex-1 overflow-auto">
-    <h1 class="text-2xl font-bold mb-2">Aturan Retensi</h1>
+    <h1 class="text-2xl font-bold mb-2">Aturan Retensi — Rawat Jalan</h1>
     <p class="text-slate-500 text-sm mb-6">Sesuai kebijakan retensi rekam medis (Permenkes). Status berubah otomatis via scheduler harian.</p>
 
     @if (session()->has('success'))

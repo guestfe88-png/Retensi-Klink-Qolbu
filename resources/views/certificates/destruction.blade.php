@@ -27,7 +27,7 @@
         <tr><td>No. Rekam Medis</td><td>{{ $certificate->berkas->no_rm }}</td></tr>
         <tr><td>Nama Pasien</td><td>{{ $certificate->berkas->nama_pasien }}</td></tr>
         <tr><td>Nama Berkas</td><td>{{ $certificate->berkas->nama_berkas ?? '-' }}</td></tr>
-        <tr><td>Klasifikasi</td><td>{{ $certificate->berkas->klasifikasi_label }}</td></tr>
+        <tr><td>Unit</td><td>Rawat Jalan</td></tr>
         <tr><td>Disetujui Oleh</td><td>{{ $certificate->approver->nama_lengkap }}</td></tr>
         <tr><td>Catatan</td><td>{{ $certificate->catatan ?? '-' }}</td></tr>
     </table>

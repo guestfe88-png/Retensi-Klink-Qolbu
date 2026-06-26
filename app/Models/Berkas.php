@@ -25,10 +25,9 @@ class Berkas extends Model
 
     public const KLASIFIKASI = [
         'rawat_jalan' => 'Rawat Jalan',
-        'rawat_inap' => 'Rawat Inap',
-        'lab' => 'Laboratorium',
-        'lainnya' => 'Lainnya',
     ];
+
+    public const DEFAULT_KLASIFIKASI = 'rawat_jalan';
 
     public function creator(): BelongsTo
     {

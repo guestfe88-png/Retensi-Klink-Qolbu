@@ -31,7 +31,7 @@ new class extends Component
         <div class="p-6 grid md:grid-cols-2 gap-4 text-sm">
             <div><span class="text-slate-500">Nama Pasien</span><p class="font-bold">{{ $berkas->nama_pasien }}</p></div>
             <div><span class="text-slate-500">Nama Berkas</span><p class="font-bold">{{ $berkas->nama_berkas ?: '-' }}</p></div>
-            <div><span class="text-slate-500">Klasifikasi</span><p class="font-bold">{{ $berkas->klasifikasi_label }}</p></div>
+            <div><span class="text-slate-500">Unit</span><p class="font-bold">Rawat Jalan</p></div>
             <div><span class="text-slate-500">Status</span><p class="font-bold">{{ $berkas->status }}</p></div>
             <div><span class="text-slate-500">Terakhir Kunjungan</span><p class="font-bold">{{ $berkas->tgl_kunjungan_terakhir?->format('d/m/Y') ?? '-' }}</p></div>
             <div><span class="text-slate-500">Jatuh Tempo Retensi</span><p class="font-bold {{ $berkas->tgl_retensi?->isPast() ? 'text-red-600' : '' }}">{{ $berkas->tgl_retensi?->format('d/m/Y') ?? '-' }}</p></div>

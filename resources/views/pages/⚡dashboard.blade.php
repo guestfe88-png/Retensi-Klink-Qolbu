@@ -212,7 +212,6 @@ new class extends Component
                             <td class="px-4 py-4 text-sm font-bold text-slate-800">{{ $row->no_rm }}</td>
                             <td class="px-4 py-4">
                                 <div class="font-bold text-slate-800">{{ $row->nama_pasien }}</div>
-                                <div class="text-xs text-slate-400 mt-0.5">{{ $row->klasifikasi_label }}</div>
                             </td>
                             <td class="px-4 py-4 text-sm text-slate-600">{{ $row->nama_berkas ?: '-' }}</td>
                             <td class="px-4 py-4">

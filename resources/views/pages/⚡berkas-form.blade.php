@@ -45,7 +45,7 @@ new class extends Component
             $this->tgl_lahir = $berkas->tgl_lahir?->format('Y-m-d');
             $this->alamat = $berkas->alamat ?? '';
             $this->nama_berkas = $berkas->nama_berkas ?? '';
-            $this->klasifikasi = $berkas->klasifikasi;
+            $this->klasifikasi = Berkas::DEFAULT_KLASIFIKASI;
             $this->lokasi_arsip = $berkas->lokasi_arsip ?? '';
             $this->status = $berkas->status;
             $this->tgl_kunjungan_terakhir = $berkas->tgl_kunjungan_terakhir?->format('Y-m-d');
@@ -110,7 +110,7 @@ new class extends Component
             'tgl_lahir' => 'nullable|date',
             'alamat' => 'nullable|string',
             'nama_berkas' => 'nullable|string|max:100',
-            'klasifikasi' => 'required|in:'.implode(',', array_keys(Berkas::KLASIFIKASI)),
+            'klasifikasi' => 'required|in:'.Berkas::DEFAULT_KLASIFIKASI,
             'lokasi_arsip' => 'nullable|string|max:150',
             'status' => 'required|in:Aktif,Inaktif,Musnah',
             'tgl_kunjungan_terakhir' => 'nullable|date',
@@ -119,6 +119,7 @@ new class extends Component
             'legal_hold' => 'boolean',
         ];
 
+        $this->klasifikasi = Berkas::DEFAULT_KLASIFIKASI;
         $this->validate($rules);
 
         if ($this->file_pdf && $this->file_pdf->getMimeType() !== 'application/pdf') {
@@ -164,7 +165,7 @@ new class extends Component
             'tgl_lahir' => $this->tgl_lahir,
             'alamat' => $this->alamat,
             'nama_berkas' => $this->nama_berkas,
-            'klasifikasi' => $this->klasifikasi,
+            'klasifikasi' => Berkas::DEFAULT_KLASIFIKASI,
             'lokasi_arsip' => $this->lokasi_arsip,
             'file_pdf' => $filename,
             'status' => $this->status,
@@ -235,12 +236,10 @@ new class extends Component
 
             <div class="grid md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-semibold mb-2">Klasifikasi *</label>
-                    <select wire:model="klasifikasi" class="w-full px-4 py-3 border rounded-2xl">
-                        @foreach (App\Models\Berkas::KLASIFIKASI as $key => $label)
-                            <option value="{{ $key }}">{{ $label }}</option>
-                        @endforeach
-                    </select>
+                    <label class="block text-sm font-semibold mb-2">Unit</label>
+                    <div class="w-full px-4 py-3 border rounded-2xl bg-slate-50 text-slate-700 font-semibold">
+                        Rawat Jalan
+                    </div>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold mb-2">Lokasi Arsip</label>
