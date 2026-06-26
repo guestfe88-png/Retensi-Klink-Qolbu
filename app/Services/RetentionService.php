@@ -69,19 +69,14 @@ class RetentionService
 
     public function alertQuery()
     {
-        $policies = RetentionPolicy::query()->where('is_active', true)->get()->keyBy('klasifikasi');
+        $policy = RetentionPolicy::forKlasifikasi();
+        $alertDays = $policy->alert_hari;
 
         return Berkas::query()
             ->whereIn('status', ['Aktif', 'Inaktif'])
             ->where('legal_hold', false)
             ->whereNotNull('tgl_retensi')
             ->get()
-            ->filter(function (Berkas $berkas) use ($policies) {
-                $policy = $policies->get($berkas->klasifikasi)
-                    ?? $policies->firstWhere('klasifikasi', null);
-                $alertDays = $policy?->alert_hari ?? 30;
-
-                return $berkas->tgl_retensi->lte(now()->addDays($alertDays));
-            });
+            ->filter(fn (Berkas $berkas) => $berkas->tgl_retensi->lte(now()->addDays($alertDays)));
     }
 }

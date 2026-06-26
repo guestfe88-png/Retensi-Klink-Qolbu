@@ -15,22 +15,29 @@ new class extends Component
 
     public function loadPolicies(): void
     {
-        $this->policies = RetentionPolicy::orderBy('id')->get()->map(fn ($p) => [
-            'id' => $p->id,
-            'nama' => $p->nama,
-            'klasifikasi' => $p->klasifikasi,
-            'tahun_aktif' => $p->tahun_aktif,
-            'tahun_inaktif' => $p->tahun_inaktif,
-            'alert_hari' => $p->alert_hari,
-            'keterangan' => $p->keterangan,
-            'is_active' => $p->is_active,
-        ])->toArray();
+        $this->policies = RetentionPolicy::query()
+            ->rawatJalan()
+            ->orderBy('id')
+            ->get()
+            ->map(fn ($p) => [
+                'id' => $p->id,
+                'nama' => $p->nama,
+                'klasifikasi' => $p->klasifikasi,
+                'tahun_aktif' => $p->tahun_aktif,
+                'tahun_inaktif' => $p->tahun_inaktif,
+                'alert_hari' => $p->alert_hari,
+                'keterangan' => $p->keterangan,
+                'is_active' => $p->is_active,
+            ])->toArray();
     }
 
     public function save(): void
     {
         foreach ($this->policies as $policy) {
-            RetentionPolicy::where('id', $policy['id'])->update([
+            RetentionPolicy::query()
+                ->rawatJalan()
+                ->where('id', $policy['id'])
+                ->update([
                 'tahun_aktif' => (int) $policy['tahun_aktif'],
                 'tahun_inaktif' => (int) $policy['tahun_inaktif'],
                 'alert_hari' => (int) $policy['alert_hari'],
@@ -46,7 +53,13 @@ new class extends Component
 
 <div class="p-6 flex-1 overflow-auto">
     <h1 class="text-2xl font-bold mb-2">Aturan Retensi — Rawat Jalan</h1>
-    <p class="text-slate-500 text-sm mb-6">Sesuai kebijakan retensi rekam medis (Permenkes). Status berubah otomatis via scheduler harian.</p>
+    <p class="text-slate-500 text-sm mb-6">Kebijakan retensi khusus unit <strong>Rawat Jalan</strong>. Status berubah otomatis via scheduler harian.</p>
+
+    @if (empty($policies))
+        <div class="mb-4 p-4 bg-amber-50 rounded-2xl text-amber-800 text-sm">
+            Aturan retensi Rawat Jalan belum tersedia. Jalankan <code class="font-mono">php artisan migrate</code>.
+        </div>
+    @endif
 
     @if (session()->has('success'))
         <div class="mb-4 p-4 bg-emerald-50 rounded-2xl text-emerald-700">{{ session('success') }}</div>
@@ -55,7 +68,8 @@ new class extends Component
     <form wire:submit="save" class="space-y-4">
         @foreach ($policies as $index => $policy)
             <div class="bg-white border rounded-2xl p-5">
-                <h2 class="font-bold mb-3">{{ $policy['nama'] }}</h2>
+                <h2 class="font-bold mb-1">{{ $policy['nama'] }}</h2>
+                <p class="text-xs text-slate-500 mb-3 uppercase tracking-wide font-semibold">Unit: Rawat Jalan</p>
                 <div class="grid md:grid-cols-4 gap-3">
                     <div>
                         <label class="text-xs font-bold text-slate-500">Tahun Aktif</label>

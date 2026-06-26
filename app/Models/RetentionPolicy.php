@@ -3,26 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Attributes\Fillable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 #[Fillable(['nama', 'klasifikasi', 'tahun_aktif', 'tahun_inaktif', 'alert_hari', 'keterangan', 'is_active'])]
 class RetentionPolicy extends Model
 {
-    public static function forKlasifikasi(?string $klasifikasi): self
+    public const RAWAT_JALAN_KLASIFIKASI = Berkas::DEFAULT_KLASIFIKASI;
+
+    public static function forKlasifikasi(?string $klasifikasi = null): self
     {
-        $policy = static::query()
-            ->where('is_active', true)
-            ->where('klasifikasi', $klasifikasi)
-            ->first();
-
-        if ($policy) {
-            return $policy;
-        }
-
         return static::query()
             ->where('is_active', true)
-            ->whereNull('klasifikasi')
+            ->where('klasifikasi', self::RAWAT_JALAN_KLASIFIKASI)
             ->firstOrFail();
+    }
+
+    public function scopeRawatJalan(Builder $query): Builder
+    {
+        return $query->where('klasifikasi', self::RAWAT_JALAN_KLASIFIKASI);
     }
 
     protected function casts(): array
