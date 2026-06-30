@@ -3,7 +3,7 @@
 Sistem manajemen retensi rekam medis berbasis Laravel 13 + Livewire 4.  
 Khusus unit **Rawat Jalan**.
 
-> Panduan instalasi untuk pemula: lihat **[PANDUAN-INSTALASI.md](PANDUAN-INSTALASI.md)**
+> Panduan instalasi : lihat **[PANDUAN-INSTALASI.md](PANDUAN-INSTALASI.md)**
 
 ## Fitur
 
