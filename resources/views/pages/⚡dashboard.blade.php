@@ -83,7 +83,6 @@ new class extends Component
             $query->where(function ($q) {
                 $q->where('no_rm', 'like', '%'.$this->search.'%')
                     ->orWhere('nama_pasien', 'like', '%'.$this->search.'%')
-                    ->orWhere('nama_berkas', 'like', '%'.$this->search.'%')
                     ->orWhere('keterangan', 'like', '%'.$this->search.'%');
             });
         }
@@ -110,8 +109,8 @@ new class extends Component
 
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
         <div>
-            <h1 class="text-3xl font-bold text-slate-800 tracking-tight">{{ $filter ? 'Data '.$filter : 'Dashboard Utama' }}</h1>
-            <p class="text-slate-500 mt-1 text-sm font-medium">Kelola status retensi berkas rekam medis Klinik Kolbu secara realtime.</p>
+            <h1 class="text-3xl font-bold text-slate-800 tracking-tight">{{ $filter ? 'Data '.$filter : config('app.name') }}</h1>
+            <p class="text-slate-500 mt-1 text-sm font-medium">Kelola status retensi rekam medis rawat jalan Klinik Kolbu.</p>
         </div>
         <div class="bg-white px-4 py-2.5 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-2 text-slate-600 font-semibold text-sm">
             <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -195,7 +194,7 @@ new class extends Component
                 <thead>
                     <tr class="bg-slate-50/75 border-b border-slate-100">
                         @if(auth()->user()->isAdmin())<th class="px-4 py-4 w-10"></th>@endif
-                        @foreach (['no_rm' => 'No RM', 'nama_pasien' => 'Pasien', 'nama_berkas' => 'Berkas', 'status' => 'Status', 'tgl_kunjungan_terakhir' => 'Kunjungan', 'tgl_retensi' => 'Jatuh Tempo', 'created_by' => 'Petugas'] as $col => $label)
+                        @foreach (['no_rm' => 'No RM', 'nama_pasien' => 'Pasien', 'status' => 'Status', 'tgl_kunjungan_terakhir' => 'Kunjungan', 'tgl_retensi' => 'Jatuh Tempo', 'created_by' => 'Petugas'] as $col => $label)
                             <th class="px-4 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">
                                 <button wire:click="sortBy('{{ $col }}')" class="hover:text-blue-600 transition-colors">{{ $label }}</button>
                             </th>
@@ -213,7 +212,6 @@ new class extends Component
                             <td class="px-4 py-4">
                                 <div class="font-bold text-slate-800">{{ $row->nama_pasien }}</div>
                             </td>
-                            <td class="px-4 py-4 text-sm text-slate-600">{{ $row->nama_berkas ?: '-' }}</td>
                             <td class="px-4 py-4">
                                 @php
                                     $badge = match($row->status) {

@@ -20,9 +20,6 @@ new class extends Component
     public string $nama_pasien = '';
     public ?string $tgl_lahir = null;
     public string $alamat = '';
-    public string $nama_berkas = '';
-    public string $klasifikasi = 'rawat_jalan';
-    public string $lokasi_arsip = '';
     public string $status = 'Aktif';
     public ?string $tgl_kunjungan_terakhir = null;
     public string $keterangan = '';
@@ -44,9 +41,6 @@ new class extends Component
             $this->nama_pasien = $berkas->nama_pasien;
             $this->tgl_lahir = $berkas->tgl_lahir?->format('Y-m-d');
             $this->alamat = $berkas->alamat ?? '';
-            $this->nama_berkas = $berkas->nama_berkas ?? '';
-            $this->klasifikasi = Berkas::DEFAULT_KLASIFIKASI;
-            $this->lokasi_arsip = $berkas->lokasi_arsip ?? '';
             $this->status = $berkas->status;
             $this->tgl_kunjungan_terakhir = $berkas->tgl_kunjungan_terakhir?->format('Y-m-d');
             $this->keterangan = $berkas->keterangan ?? '';
@@ -109,9 +103,6 @@ new class extends Component
             'nama_pasien' => 'required|string|max:100',
             'tgl_lahir' => 'nullable|date',
             'alamat' => 'nullable|string',
-            'nama_berkas' => 'nullable|string|max:100',
-            'klasifikasi' => 'required|in:'.Berkas::DEFAULT_KLASIFIKASI,
-            'lokasi_arsip' => 'nullable|string|max:150',
             'status' => 'required|in:Aktif,Inaktif,Musnah',
             'tgl_kunjungan_terakhir' => 'nullable|date',
             'keterangan' => 'nullable|string',
@@ -119,7 +110,6 @@ new class extends Component
             'legal_hold' => 'boolean',
         ];
 
-        $this->klasifikasi = Berkas::DEFAULT_KLASIFIKASI;
         $this->validate($rules);
 
         if ($this->file_pdf && $this->file_pdf->getMimeType() !== 'application/pdf') {
@@ -164,9 +154,7 @@ new class extends Component
             'nama_pasien' => $this->nama_pasien,
             'tgl_lahir' => $this->tgl_lahir,
             'alamat' => $this->alamat,
-            'nama_berkas' => $this->nama_berkas,
             'klasifikasi' => Berkas::DEFAULT_KLASIFIKASI,
-            'lokasi_arsip' => $this->lokasi_arsip,
             'file_pdf' => $filename,
             'status' => $this->status,
             'tgl_kunjungan_terakhir' => $this->tgl_kunjungan_terakhir,
@@ -229,21 +217,9 @@ new class extends Component
             </div>
 
             <div>
-                <label class="block text-sm font-semibold mb-2">Nama Berkas</label>
-                <input type="text" wire:model="nama_berkas" class="w-full px-4 py-3 border rounded-2xl" placeholder="Contoh: RM Rawat Jalan Jan 2026">
-                @error('nama_berkas') <span class="text-xs text-red-500">{{ $message }}</span> @enderror
-            </div>
-
-            <div class="grid md:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-semibold mb-2">Unit</label>
-                    <div class="w-full px-4 py-3 border rounded-2xl bg-slate-50 text-slate-700 font-semibold">
-                        Rawat Jalan
-                    </div>
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold mb-2">Lokasi Arsip</label>
-                    <input type="text" wire:model="lokasi_arsip" class="w-full px-4 py-3 border rounded-2xl" placeholder="Rak A / Box 12">
+                <label class="block text-sm font-semibold mb-2">Klasifikasi</label>
+                <div class="w-full px-4 py-3 border rounded-2xl bg-slate-50 text-slate-700 font-semibold">
+                    Rawat Jalan
                 </div>
             </div>
 

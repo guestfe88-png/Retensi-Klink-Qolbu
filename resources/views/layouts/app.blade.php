@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'Retensi Rekam Medis' }} - Klinik Kolbu</title>
+    <title>{{ $title ?? config('app.name') }} — Klinik Kolbu</title>
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="shortcut icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
@@ -23,8 +23,8 @@
                         <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" class="w-full h-full object-contain">
                     </div>
                     <div class="flex flex-col">
-                        <span class="font-bold text-sm leading-none tracking-tight">Klinik Kolbu</span>
-                        <span class="text-[10px] text-slate-400 font-semibold uppercase mt-0.5 tracking-wider">Retensi RM</span>
+                        <span class="font-bold text-sm leading-none tracking-tight">{{ config('app.name') }}</span>
+                        <span class="text-[10px] text-slate-400 font-semibold uppercase mt-0.5 tracking-wider">Klinik Kolbu</span>
                     </div>
                 </a>
                 <label for="sidebar-toggle" class="lg:hidden text-slate-400 cursor-pointer">
@@ -117,7 +117,7 @@
                 <label for="sidebar-toggle" class="p-2 rounded-lg hover:bg-slate-100 cursor-pointer">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
                 </label>
-                <span class="font-bold text-slate-800">Retensi RM</span>
+                <span class="font-bold text-slate-800">{{ config('app.name') }}</span>
             </div>
             @endauth
             {{ $slot }}

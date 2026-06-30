@@ -31,8 +31,8 @@ new class extends Component
     <div class="max-w-7xl mx-auto space-y-8">
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-                <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">Beranda Utama</h1>
-                <p class="text-slate-500 mt-1.5 text-sm font-medium">Pantau statistik ringkasan dan status retensi berkas rekam medis Klinik Kolbu.</p>
+                <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">{{ config('app.name') }}</h1>
+                <p class="text-slate-500 mt-1.5 text-sm font-medium">Pantau statistik ringkasan retensi rekam medis rawat jalan Klinik Kolbu.</p>
             </div>
             <div class="bg-white px-4 py-3 rounded-2xl shadow-sm border border-slate-100 flex items-center gap-2 text-slate-600 font-semibold text-sm">
                 <svg class="w-5 h-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
@@ -51,7 +51,7 @@ new class extends Component
                     </span>
                     <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight">{{ Auth::user()->nama_lengkap }}</h2>
                     <p class="text-slate-400 text-sm md:text-base leading-relaxed">
-                        Anda masuk sebagai <strong class="text-white">{{ Auth::user()->role }}</strong>. Kelola masa retensi berkas rekam medis dengan mudah.
+                        Anda masuk sebagai <strong class="text-white">{{ Auth::user()->role }}</strong> di <strong class="text-white">{{ config('app.name') }}</strong>.
                     </p>
                 </div>
                 <div class="flex-shrink-0 bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-6 flex flex-col items-center justify-center min-w-[180px] text-center">
@@ -165,6 +165,6 @@ new class extends Component
     </div>
 
     <div class="text-center text-slate-400 text-xs mt-12 py-4 border-t border-slate-200/60 max-w-7xl mx-auto">
-        &copy; {{ date('Y') }} Klinik Kolbu. Hak Cipta Dilindungi Undang-Undang.
+        &copy; {{ date('Y') }} {{ config('app.name') }} — Klinik Kolbu.
     </div>
 </div>

@@ -19,15 +19,13 @@
     <button class="no-print" onclick="window.print()" style="margin-bottom:20px;padding:10px 16px;">Cetak Sertifikat</button>
 
     <h1>SERTIFIKAT PEMUSNAHAN REKAM MEDIS</h1>
-    <p class="subtitle">Klinik Kolbu — Sistem Retensi RM</p>
+    <p class="subtitle">Klinik Kolbu — {{ config('app.name') }}</p>
 
     <table>
         <tr><td>Nomor Sertifikat</td><td>{{ $certificate->certificate_number }}</td></tr>
         <tr><td>Tanggal Pemusnahan</td><td>{{ $certificate->destroyed_at->format('d/m/Y H:i') }}</td></tr>
         <tr><td>No. Rekam Medis</td><td>{{ $certificate->berkas->no_rm }}</td></tr>
         <tr><td>Nama Pasien</td><td>{{ $certificate->berkas->nama_pasien }}</td></tr>
-        <tr><td>Nama Berkas</td><td>{{ $certificate->berkas->nama_berkas ?? '-' }}</td></tr>
-        <tr><td>Unit</td><td>Rawat Jalan</td></tr>
         <tr><td>Disetujui Oleh</td><td>{{ $certificate->approver->nama_lengkap }}</td></tr>
         <tr><td>Catatan</td><td>{{ $certificate->catatan ?? '-' }}</td></tr>
     </table>

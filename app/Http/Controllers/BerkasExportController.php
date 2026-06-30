@@ -16,8 +16,8 @@ class BerkasExportController extends Controller
         return response()->streamDownload(function () {
             $handle = fopen('php://output', 'w');
             fputcsv($handle, [
-                'No RM', 'Nama Pasien', 'Klasifikasi', 'Nama Berkas', 'Status',
-                'Kunjungan Terakhir', 'Jatuh Tempo', 'Lokasi Arsip', 'Legal Hold',
+                'No RM', 'Nama Pasien', 'Status',
+                'Kunjungan Terakhir', 'Jatuh Tempo', 'Legal Hold',
                 'Keterangan', 'Petugas', 'Dibuat',
             ]);
 
@@ -26,12 +26,9 @@ class BerkasExportController extends Controller
                     fputcsv($handle, [
                         $row->no_rm,
                         $row->nama_pasien,
-                        $row->klasifikasi_label,
-                        $row->nama_berkas,
                         $row->status,
                         $row->tgl_kunjungan_terakhir?->format('Y-m-d'),
                         $row->tgl_retensi?->format('Y-m-d'),
-                        $row->lokasi_arsip,
                         $row->legal_hold ? 'Ya' : 'Tidak',
                         $row->keterangan,
                         $row->creator?->nama_lengkap,

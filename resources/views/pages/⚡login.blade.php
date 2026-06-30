@@ -46,11 +46,12 @@ new class extends Component
     <div class="absolute -top-40 -left-40 w-96 h-96 bg-blue-600/30 rounded-full blur-3xl"></div>
     <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-indigo-600/30 rounded-full blur-3xl"></div>
 
-    <div class="bg-white/80 backdrop-blur-md rounded-3xl shadow-2xl p-8 w-full max-w-md border border-white/20 relative z-10">
+    <div class="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md relative z-10">
         <div class="text-center mb-8">
-            <img src="{{ asset('assets/images/logo.png') }}" alt="Klinik Kolbu Logo" class="h-20 object-contain mx-auto mb-4">
-            <h1 class="text-2xl font-bold text-slate-800 tracking-tight">RETENSI RM</h1>
-            <p class="text-slate-500 mt-2 text-sm font-medium">Silakan masuk untuk mengelola rekam medis</p>
+            <img src="{{ asset('assets/images/logo.png') }}" alt="Logo" class="h-20 object-contain mx-auto mb-5">
+            <p class="text-xl font-bold text-slate-800 tracking-tight">Selamat Datang di</p>
+            <h1 class="text-3xl font-bold text-slate-900 tracking-tight mt-1">{{ config('app.name') }}</h1>
+            <p class="text-slate-500 mt-2 text-sm">Silahkan masuk untuk melanjutkan</p>
         </div>
 
         @if (session()->has('success'))
@@ -63,7 +64,7 @@ new class extends Component
             <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-2">Username</label>
                 <input type="text" wire:model="username" required
-                       class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 outline-none"
+                       class="w-full px-4 py-3 bg-slate-100 border-2 border-slate-100 rounded-2xl text-slate-800 placeholder:text-slate-400 outline-none focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100"
                        placeholder="Masukkan username">
                 @error('username') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
             </div>
@@ -74,7 +75,7 @@ new class extends Component
                     <a href="{{ route('password.request') }}" class="text-xs font-bold text-blue-600 hover:text-blue-800">Lupa Password?</a>
                 </div>
                 <input type="password" wire:model="password" required
-                       class="w-full px-4 py-3 bg-slate-50 border-2 border-slate-100 rounded-2xl focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 outline-none"
+                       class="w-full px-4 py-3 bg-slate-100 border-2 border-slate-100 rounded-2xl text-slate-800 placeholder:text-slate-400 outline-none focus:border-blue-400 focus:bg-white focus:ring-4 focus:ring-blue-100"
                        placeholder="Masukkan password">
                 @error('password') <span class="text-xs text-red-500 mt-1 block">{{ $message }}</span> @enderror
             </div>

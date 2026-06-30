@@ -74,7 +74,7 @@ new class extends Component
             <div class="p-4 flex flex-col md:flex-row md:items-center justify-between gap-3">
                 <div>
                     <p class="font-bold">{{ $req->nama_pasien }} ({{ $req->no_rm }})</p>
-                    <p class="text-sm text-slate-500">{{ $req->nama_berkas }} — diajukan oleh {{ $req->creator?->nama_lengkap }}</p>
+                    <p class="text-sm text-slate-500">Rawat Jalan — diajukan oleh {{ $req->creator?->nama_lengkap }}</p>
                 </div>
                 <div class="flex gap-2">
                     <button wire:click="approve({{ $req->id }})" wire:confirm="Setujui pemusnahan?" class="px-4 py-2 bg-red-600 text-white rounded-xl text-sm font-bold">Setujui</button>
